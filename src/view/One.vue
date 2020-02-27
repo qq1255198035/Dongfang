@@ -25,9 +25,9 @@
             <div class="right">
                 <div class="leida">
                     <template v-for="(item,index) in imgArr">
-                        <transition :key="index" enter-active-class="animated bounceIn faster" leave-active-class="animated bounceOut faster" mode="out-in">
-                            <img :src="item" :key="index" alt="雷达图" v-show="imgIndex === index"/>
-                        </transition>
+                        <transition-group :key="index" enter-active-class="animated bounceIn" tag="div">
+                                <img :src="item" :key="index" v-show="imgIndex === index" alt="雷达图" />
+                        </transition-group>
                     </template>
                 </div>
                 <article class="article">
@@ -107,7 +107,6 @@ export default {
         display: flex;
         width: 100%;
         height: 90%;
-        overflow: hidden;
         .left{
             width: 25%;
             display: flex;
@@ -149,6 +148,7 @@ export default {
                 width: 90%;
                 height: 50%;
                 overflow: hidden;
+                transform: scale(1.2);
                 img{
                     width: 100%;
                 }

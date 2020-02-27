@@ -123,8 +123,30 @@
                     <div class="tab-content">
                         <transition enter-active-class="animated fadeInLeftBig" leave-active-class="animated fadeOutLeftBig faster" mode="out-in">
                             <div class="content1" v-show="tabShow === 1">
-                                <div>
-                                    <img src="./../assets/imgs/show-time.png">
+                                <div class="show-time">
+                                    <ul>
+                                        <li>
+                                            <div v-for="(item,index) in points.slice(0,5)" :key="index" @click="showPoints(item.pointA,item.pointB)">
+                                                <sub>{{item.pointA}}</sub><br />
+                                                <sub>{{item.pointB}}</sub>
+                                            </div>
+                                            
+                                        </li>
+                                        <li>
+                                            <div v-for="(item,index) in points.slice(5,9)" :key="index" @click="showPoints(item.pointA,item.pointB)">
+                                                <sub>{{item.pointA}}</sub><br />
+                                                <sub>{{item.pointB}}</sub>
+                                            </div>
+                                            
+                                        </li>
+                                        <li>
+                                            <div v-for="(item,index) in points.slice(9)" :key="index" @click="showPoints(item.pointA,item.pointB)">
+                                                <sub>{{item.pointA}}</sub><br />
+                                                <sub>{{item.pointB}}</sub>
+                                            </div>
+                                            
+                                        </li>
+                                    </ul>
                                 </div>
                                 <ul>
                                     <li>
@@ -134,21 +156,43 @@
                                     </li>
                                     <li>
                                         <span>赛季表现</span>
-                                        <h2>65.5%</h2>
-                                        <p>5/696</p>
+                                        <h2>{{pointA}}</h2>
+                                        <p>{{pointB}}</p>
                                     </li>
                                     <li>
                                         <span>最近五场表现</span>
-                                        <h2>98.5%</h2>
-                                        <p>88/33</p>
+                                        <h2>{{pointA}}</h2>
+                                        <p>{{pointB}}</p>
                                     </li>
                                 </ul>
                             </div>
                         </transition>
                         <transition enter-active-class="animated fadeInRightBig" leave-active-class="animated fadeOutRightBig faster" mode="out-in">
                             <div class="content1" v-show="tabShow === 2">
-                                <div>
-                                    <img src="./../assets/imgs/show-time.png">
+                                <div class="show-time">
+                                    <ul>
+                                        <li>
+                                            <div v-for="(item,index) in points.slice(0,5)" :key="index" @click="showPoints(item.pointA,item.pointB)">
+                                                <sub>{{item.pointA}}</sub><br />
+                                                <sub>{{item.pointB}}</sub>
+                                            </div>
+                                            
+                                        </li>
+                                        <li>
+                                            <div v-for="(item,index) in points.slice(5,9)" :key="index" @click="showPoints(item.pointA,item.pointB)">
+                                                <sub>{{item.pointA}}</sub><br />
+                                                <sub>{{item.pointB}}</sub>
+                                            </div>
+                                            
+                                        </li>
+                                        <li>
+                                            <div v-for="(item,index) in points.slice(9)" :key="index" @click="showPoints(item.pointA,item.pointB)">
+                                                <sub>{{item.pointA}}</sub><br />
+                                                <sub>{{item.pointB}}</sub>
+                                            </div>
+                                            
+                                        </li>
+                                    </ul>
                                 </div>
                                 <ul>
                                     <li>
@@ -158,13 +202,13 @@
                                     </li>
                                     <li>
                                         <span>赛季表现</span>
-                                        <h2>11%</h2>
-                                        <p>88/358</p>
+                                        <h2>{{pointA}}</h2>
+                                        <p>{{pointB}}</p>
                                     </li>
                                     <li>
                                         <span>最近五场表现</span>
-                                        <h2>58.54%</h2>
-                                        <p>44/22</p>
+                                        <h2>{{pointA}}</h2>
+                                        <p>{{pointB}}</p>
                                     </li>
                                 </ul>
                             </div>
@@ -260,7 +304,51 @@ export default {
         return{
             drawerVisible: false,
             dialogVisible: false,
-            tabShow: 1
+            tabShow: 1,
+            pointA: '56%',
+            pointB: '5/8',
+            points:[
+                {
+                    pointA: '56%',
+                    pointB: '5/8'
+                },
+                {
+                    pointA: '55.6%',
+                    pointB: '5/8'
+                },
+                {
+                    pointA: '52.6%',
+                    pointB: '52/8'
+                },
+                {
+                    pointA: '75.6%',
+                    pointB: '25/8'
+                },
+                {
+                    pointA: '55.6%',
+                    pointB: '52/8'
+                },
+                {
+                    pointA: '55.6%',
+                    pointB: '52/28'
+                },
+                {
+                    pointA: '25.6%',
+                    pointB: '52/87'
+                },
+                {
+                    pointA: '72.6%',
+                    pointB: '24/28'
+                },
+                {
+                    pointA: '28.6%',
+                    pointB: '22/82'
+                },
+                {
+                    pointA: '12.6%',
+                    pointB: '22/8'
+                }
+            ]
         }
     },
     components:{
@@ -269,6 +357,10 @@ export default {
     methods:{
         openDrawer(){
             this.dialogVisible = true;
+        },
+        showPoints(a,b){
+            this.pointA = a;
+            this.pointB = b;
         }
     },
     mounted(){
@@ -399,7 +491,7 @@ export default {
                             background-size: 70% 50%;
                             text-shadow: 0 0 5px rgba(255, 255, 255, 0.9);
                             img{
-                                width: 20%;
+                                width: 18%;
                             }
                         }
                     }
@@ -442,7 +534,7 @@ export default {
             .left{
                 height: 80%;
                 justify-content: center;
-                align-items: center;
+                align-items: flex-end;
                 text-align: right;
                 ul{
                     justify-content: center;
@@ -461,8 +553,12 @@ export default {
                 overflow: hidden;
                 .article{
                     width: 100%;
-                    height: 150%;
+                    height: 100%;
                     margin: 0 auto;
+                    display: flex;
+                    flex-direction: column;
+                    background-size: 100% 150%;
+                    justify-content: space-between;
                     .ol{
                         width: 50%;
                         margin: 0 auto;
@@ -486,7 +582,7 @@ export default {
             .right{
                 height: 80%;
                 justify-content: center;
-                align-items: center;
+                align-items: flex-end;
                 ul{
                     justify-content: center;
                     align-items: center;
@@ -552,17 +648,44 @@ export default {
         overflow: hidden;
         .content1{
             height: 100%;
-            padding-top: 20px;
+            padding-top: 10px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            > div{
+            .show-time{
                 text-align: center;
+                background-image: url('./../assets/imgs/show-time.png');
+                background-position: center center;
+                background-size: 70% 100%;
+                height: calc(100% - 72px);
+                background-repeat: no-repeat;
+                ul{
+                    width: 70%;
+                    height: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-around;
+                    align-items: space-around;
+                    margin: 0 auto;
+                    li{
+                        display: flex;
+                        justify-content: space-between;
+                        sub{
+                            text-align: center;
+                            font-size: 12px;
+                            color: #fffd34;
+                        }
+                        &:nth-child(3){
+                            justify-content: center;
+                        }
+                    }
+                    
+                }
                 img{
                     width: 70%;
                 }
             }
-            ul{
+            > ul{
                 display: flex;
                 justify-content: center;
                 padding-top: 20px;
