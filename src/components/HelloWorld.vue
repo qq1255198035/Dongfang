@@ -92,16 +92,11 @@ export default {
                         slidesPerView: 3,
                         centeredSlides: true,
                         coverflowEffect: {
-                        rotate: 0,
-                        stretch: 10,
-                        depth: 500,
-                        modifier: 1,
-                        
-                        slideShadows : false,
-                        simulateTouch: true,
-                        allowTouchMove: true,
-												followFinger: false,
-												grabCursor : true,
+                              rotate: 1000,
+                              stretch: 10,
+                              depth: 100,
+                              modifier: 1,
+                              
                         },
                         autoplay: {
                               delay: 3000,//自动播放速度
@@ -111,16 +106,13 @@ export default {
                               nextEl: '.swiper-button-next',
                               prevEl: '.swiper-button-prev',
                         },
-												on: {
-													slideChangeTransitionEnd: function(){
-														console.log(this.activeIndex);//切换结束时，告诉我现在是第几个slide
-													},
-												},
+                        on: {
+                              slideChangeTransitionEnd: function(){
+                                    console.log(this.activeIndex);//切换结束时，告诉我现在是第几个slide
+                              },
+                        },
                   })        
-            },
-        
-						
-					
+            },		
       },
       created(){
             

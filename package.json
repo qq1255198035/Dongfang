@@ -3,10 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "serve": "vue-cli-service serve --open",
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "animate.css": "^3.7.2",
     "exports-loader": "^0.7.0",
     "imports-loader": "^0.8.0",
     "install": "^0.13.0",
@@ -17,7 +18,8 @@
     "three-obj-mtl-loader": "^1.0.3",
     "three-orbit-controls": "^82.1.0",
     "vue": "^2.5.17",
-    "vue-3d-model": "^1.2.2"
+    "vue-3d-model": "^1.2.2",
+    "vue-router": "^3.1.5"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.2.0",
