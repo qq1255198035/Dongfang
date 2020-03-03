@@ -5,36 +5,35 @@
         </header>
         <section>
             <div class="left">
-                <img src="./../assets//imgs/swiper-logo.png" alt="">
                 <MySwiper @slideChange="onSlideChange"></MySwiper>
             </div>
             <div class="center">
-                <div class="img-box">
-                    <template v-for="(item,index) in imgUrl">
-                        
-                        <img :src="item" :key="index" alt="人物" v-show="imgIndex === index"/>
-                        
-                    </template>
-                </div>
                 <div class="btn-box">
                     <router-link to="/two">
                         <img src="./../assets/imgs/home-main-btn.png" alt="按钮" />
                     </router-link>
                 </div>
+                <div class="img-box">
+                    <model-obj 
+                        id="place"
+                        :src="`${publicPath}model/clooth.obj`"
+                        :mtl="`${publicPath}model/clooth.mtl`"
+                        backgroundColor="rgb(0,0,0)"
+                        :width="300"
+                        :height="300"	
+                        :scale="{x:0.8,y:0.8,z:1}"
+                        :position="{x:0.2,y:0.3,z:0.1}"									
+                        :background-alpha="0"
+                        :controlsOptions="{maxPolarAngle: Math.PI/2,minPolarAngle: Math.PI/2,enableKeys: false,enableZoom: false}"
+                    >
+                    </model-obj>
+                </div>
             </div>
             <div class="right">
                 <div class="leida">
-                    <template v-for="(item,index) in imgArr">
-                        <transition-group :key="index" enter-active-class="animated bounceIn" tag="div">
-                                <img :src="item" :key="index" v-show="imgIndex === index" alt="雷达图" />
-                        </transition-group>
-                    </template>
+                    <canvas id="container" style="width: 100%;height: 100%;"></canvas>
                 </div>
                 <article class="article">
-                    <h2>
-                        <img src="./../assets/imgs/rentou.png">
-                        基本信息
-                    </h2>
                     <p>2.11 / 120.2 公斤</p>
                     <p>生日: 1993-07-20</p>
                     <p>选秀: 2013</p>
@@ -47,6 +46,7 @@
 </template>
 <script>
 import animate from 'animate.css';
+import { ModelObj } from 'vue-3d-model'
 import MySwiper from './../components/Swiper'
 import img1 from './../assets/imgs/home-main.png'
 import img2 from './../assets/imgs/home-main-2.png'
@@ -67,11 +67,31 @@ export default {
                 img4,
                 img5,
                 img6
-            ]
+            ],
+            publicPath: process.env.BASE_URL,
+            data:[
+                    {
+                    item: '进攻',
+                    score: 70
+                    }, {
+                    item: '敏捷',
+                    score: 30
+                    }, {
+                    item: '技能',
+                    score: 60
+                    }, {
+                    item: '体力',
+                    score: 70
+                    }, {
+                    item: '弹跳',
+                    score: 50
+                    }
+                ]
         }
     },
     components:{
-        MySwiper
+        MySwiper,
+        ModelObj
     },
     methods:{
         onSlideChange(index){
@@ -80,8 +100,75 @@ export default {
         }
     },
     mounted(){
-        
-        
+        this.$nextTick(() => {
+            const chart = new this.F2.Chart({
+                id: 'container',
+                pixelRatio: window.devicePixelRatio
+            });
+            chart.coord('polar');
+            //changeData
+            chart.source(this.data, {
+                score: {
+                    min: 0,
+                    max: 120,
+                    nice: false,
+                    tickCount: 4
+                }
+            });
+            // X轴样式
+            chart.axis('score', {
+                // 为null时，雷达图上不显示数值
+                label:null,
+                grid: function label(text, index, total){
+                    // if (index === total - 1) {
+                    //     return {
+                    //         stroke: '#2ECCD1',
+                    //         strokeOpacity: 1,
+                    //         lineDash: null,
+                    //         fillStyle: "l(45) 0:rgba(33,102,106,1) 1:rgba(255,61,84,0.3)",
+                    //         fillOpacity: 1 // 弧线网格
+                    //     };
+                    // }
+                    return {
+                        stroke: '#2ECCD1',
+                        strokeOpacity: 1,
+                        lineDash: null,
+                        fillStyle: "r(0.5,0.5,0.1) 0:rgba(73,108,236,0.5) 1:rgba(5,236,254,0.5)",
+                        fillOpacity: 1 // 弧线网格
+                        
+                    };
+                }
+                
+            });
+            //Y轴样式 
+            chart.axis('item', {
+                label:{
+                        top: true,
+                        //字颜色
+                        fillStyle: '#fff'
+                },
+                grid:{
+                        lineDash: null,
+                        stroke: '#2ECCD1'
+                    }
+            });
+            chart.legend(false);
+            //雷达竖直面积区域样式
+            //线颜色
+            chart.line().position('item*score').color('#2ECCD1');
+            //区域颜色
+            chart.area().position('item*score').style({fillStyle: "l(90) 0:rgba(5,236,254,1) 1:rgba(73,108,236,1)",fillOpacity: 1});
+            //点颜色
+            chart.point().position('item*score').color('red')
+                .style({
+                    stroke: '#fff',
+                    lineWidth: 1,
+                    size: 0
+                });
+            
+            chart.render();
+        })
+            
         
     }
 }
@@ -96,10 +183,13 @@ export default {
         width: 100%;
         height: 10%;
         display: flex;
+        padding-left: 10px;
         justify-content: flex-start;
-        align-items: flex-start;
+        align-items: center;
+        z-index: 9999;
+        position: relative;
         img{
-            width: 25%;
+            width: 4%;
             cursor: pointer;
         }
     }
@@ -107,14 +197,12 @@ export default {
         display: flex;
         width: 100%;
         height: 90%;
+        padding: 0 10px;
         .left{
-            width: 25%;
+            width: 15%;
             display: flex;
-            justify-content: flex-start;
+            justify-content: center;
             align-items: center;
-            > img{
-                width: 50%;
-            }
         }
         .center{
             width: 45%;
@@ -122,10 +210,13 @@ export default {
             flex-direction: column;
             justify-content: space-between;
             .img-box{
-                display: flex;
+                
                 height: 90%;
-                justify-content: center;
-                align-items: flex-end;
+                
+                background-image: url('./../assets/imgs/renwu-bg.png');
+                background-size: 90%;
+                background-repeat: no-repeat;
+                background-position: 0 100%;
                 img{
                     width: 70%;
                     
@@ -140,44 +231,34 @@ export default {
             }
         }
         .right{
-            width: 30%;
+            width: 40%;
             background-image: url('./../assets/imgs/border.png');
-            background-size: 90% 95%;
+            background-size: 100% 100%;
             background-repeat: no-repeat;
             .leida{
-                width: 90%;
-                height: 50%;
+                width: 100%;
+                height: 70%;
                 overflow: hidden;
-                transform: scale(1.2);
                 img{
                     width: 100%;
                 }
             }
             .article{
-                width: 90%;
-                padding-top: 20px;
-                h2{
-                    margin-bottom: 10px;
-                    color: #fff;
-                    font-weight: normal;
-                    font-size: 14px;
-                    text-align: center;
-                    background-image: url('./../assets/imgs/diwen.png');
-                    background-repeat: no-repeat;
-                    background-position-x: center;
-                    background-position-y: bottom;
-                    background-size: 50% 50%;
-                    img{
-                        width: 14px;
-                        height: 15px;
-                        margin-right: 4px;
-                    }
-                }
+                width: 100%;
+                height: 30%;
+                display: flex;
+                padding: 0 10px 20px;
+                flex-wrap: wrap; 
+                justify-content: center;
+                align-items: center;
                 p{
                     text-align: center;
                     color: #fff;
                     font-size: 12px;
-                    margin: 5px 0;
+                    width: 50%;
+                    &:last-child{
+                        width: 100%;
+                    }
                 }
             }
         }

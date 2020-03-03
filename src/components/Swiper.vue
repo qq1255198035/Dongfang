@@ -2,7 +2,7 @@
     <div id="Swiper">
         <div class="swiper-container">
             <div class="swiper-wrapper">
-                <div class="swiper-slide" v-for="(item,index) in imgUrl" :key="index">
+                <div class="swiper-slide" v-for="(item,index) in imgUrl" :key="index" :style="{opacity: active === index ? 1 : 0.5}">
                     <img :src="item">
                 </div>
             </div>
@@ -11,12 +11,13 @@
 </template>
 <script>
 import Swiper from "swiper"
-import imgurl1 from './../assets/imgs/home-img-1.png'
-import imgurl2 from './../assets/imgs/home-img-2.png'
-import imgurl3 from './../assets/imgs/home-img-3.png'
+import imgurl1 from './../assets/imgs/home-img-4.png'
+import imgurl2 from './../assets/imgs/home-img-4.png'
+import imgurl3 from './../assets/imgs/home-img-4.png'
 export default{
     data(){
         return{
+            active: 0,
             imgUrl: [
                 imgurl1,
                 imgurl2,
@@ -35,21 +36,22 @@ export default{
                 slidesPerView: 'auto',
                 centeredSlides : true,
                 slideToClickedSlide: true,
+                grabCursor : true,
+                followFinger: false,
+                simulateTouch: true,
+                allowTouchMove: true,
                 coverflowEffect: {
                     rotate: 0,
                     stretch: 10,
                     depth: 500,
                     modifier: 1,
-                    slideShadows : false,
-                    simulateTouch: true,
-                    allowTouchMove: true,
-                    followFinger: false,
-                    grabCursor : true
+                    slideShadows : false
                 },
                 spaceBetween : 50,
                 on: {
                     slideChange: function(){
                         console.log(this.activeIndex);
+                        that.active = this.activeIndex;
                         that.$emit('slideChange',this.activeIndex)
                     },
                 },
@@ -67,18 +69,24 @@ export default{
 </script>
 <style lang="less" scoped>
 @import './../../node_modules/swiper/css/swiper.css';
-.swiper-container{
-    touch-action: none;
-    .swiper-wrapper{
+#Swiper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .swiper-container{
         touch-action: none;
-        .swiper-slide{
-            img{
-                width: 100%;
-                height: 100%;
+        .swiper-wrapper{
+            touch-action: none;
+            .swiper-slide{
+                img{
+                    width: 90%;
+                    height: 90%;
+                }
             }
         }
     }
 }
+
 
 
 </style>

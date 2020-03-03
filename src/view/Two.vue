@@ -1,111 +1,138 @@
 <template>
     <div id="Two">
         <header>
-            <img src="./../assets/imgs/home-top-btn.png" alt="按钮" @click="$router.go(-1)"/>        
+            <img src="./../assets/imgs/home-top-btn.png" alt="按钮" @click="$router.go(-1)"/>     
+            <div>
+                Fleet Commond
+                <img src="./../assets/imgs/home-img-4.png" alt="">
+            </div>
         </header>
         <div class="main">
-            <div class="title">
-                <h3>球员</h3>
-                <h2>VS</h2>
-                <h3>联盟平均数据</h3>
-            </div>
-            <section class="top">
-                <div class="left">
-                    <div class="title">
-                        <img src="./../assets/imgs/ex-touxiang.png" />
-                        
-                    </div>
-                    <ul @click="openDrawer">
-                        <li>60<p :style="{width: '60px'}"></p></li>
-                        <li>45<p :style="{width: '45px'}"></p></li>
-                        <li>76<p :style="{width: '76px'}"></p></li>
-                        <li>56<p :style="{width: '56px'}"></p></li>
-                        <li>23<p :style="{width: '23px'}"></p></li>
+            <section class="left">
+                <h2>赛季数据</h2>
+                <div class="canvas" @click="dialogVisible = true">
+                    <ul class="top charts">
+                        <li>
+                            <span>55</span>
+                            <p></p>
+                        </li>
+                        <li>
+                            <span>55</span>
+                            <p></p>
+                        </li>
+                        <li>
+                            <span>55</span>
+                            <p></p>
+                        </li>
+                        <li>
+                            <span>55</span>
+                            <p></p>
+                        </li>
+                        <li>
+                            <span>55</span>
+                            <p></p>
+                        </li>
+                    </ul>
+                    <ul class="center">
+                        <li>
+                            <span>场</span> 
+                            <span>均</span>
+                            <span>得</span>
+                            <span>分</span>
+                        </li>
+                        <li>
+                            <span>场</span> 
+                            <span>均</span>
+                            <span>助</span>
+                            <span>攻</span>
+                        </li>
+                        <li>
+                            <span>场</span> 
+                            <span>均</span>
+                            <span>篮</span>
+                            <span>板</span>
+                        </li>
+                        <li>
+                            <span>罚</span> 
+                            <span>球</span>
+                            <span>%</span>
+                        </li>
+                        <li>
+                            <span>三</span> 
+                            <span>分</span>
+                            <span>%</span>
+                        </li>
+                    </ul>
+                    <ul class="bottom charts">
+                        <li>
+                            <p></p>
+                            <span>55</span>
+                        </li>
+                        <li>
+                            <p></p>
+                            <span>55</span>
+                        </li>
+                        <li>
+                            <p></p>
+                            <span>55</span>
+                        </li>
+                        <li>
+                            <p></p>
+                            <span>55</span>
+                        </li>
+                        <li>
+                            <p></p>
+                            <span>55</span>
+                        </li>
                     </ul>
                 </div>
-                <div class="center">
-                    
-                    <article class="article">
-                        <h2>赛季数据</h2>
-                        <ul class="ul">
-                            <li>
-                                <img src="./../assets/imgs/icon1.png" />
-                                场均得分
-                            </li>
-                            <li>
-                                <img src="./../assets/imgs/icon2.png" />
-                                场均助攻
-                            </li>
-                            <li>
-                                <img src="./../assets/imgs/icon3.png" />
-                                场均篮板
-                            </li>
-                            <li>
-                                <img src="./../assets/imgs/icon4.png" />
-                                罚球%
-                            </li>
-                            <li>
-                                <img src="./../assets/imgs/icon5.png" />
-                                三分%
-                            </li>
-                        </ul>
-                    </article>
-                </div>
-                <div class="right">
-                    <ul @click="openDrawer">
-                        <li><p :style="{width: '40px'}"></p>40</li>
-                        <li><p :style="{width: '56px'}"></p>56</li>
-                        <li><p :style="{width: '74px'}"></p>74</li>
-                        <li><p :style="{width: '65px'}"></p>65</li>
-                        <li><p :style="{width: '32px'}"></p>32</li>
+                <div class="legend">
+                    <ul>
+                        <li>
+                            <span></span>
+                            球员
+                        </li>
+                        <li>
+                            <span></span>
+                            联盟平均数
+                        </li>
                     </ul>
                 </div>
             </section>
-            <section class="top bottom">
-                <div class="left">
-                    <div>
-                        <img src="./../assets/imgs/background.png" @click="drawerVisible = true"/>
-                    </div>
-                    <ul>
-                        <li>50%</li>
-                        <li>50%</li>
-                        <li>50%</li>
-                    </ul>
+            <section class="right">
+                <h2>投篮表现</h2>
+                <div class="img-box">
+                    <img src="./../assets/imgs/background.png">
                 </div>
-                <div class="center">
-                    <article class="article">
-                        <h2>赛季数据</h2>
-                        <ul class="ol">
-                            <li>
-                                两分
-                            </li>
-                            <li>
-                                三分
-                            </li>
-                            <li>
-                                总计
-                            </li>
-                        </ul>
-                    </article>
-                </div>
-                <div class="right">  
-                    <ul>
-                        <li>50%</li>
-                        <li>50%</li>
-                        <li>50%</li>
-                    </ul>
-                    <div>
-                        <img src="./../assets/imgs/background.png" @click="drawerVisible = true"/>
-                    </div>
-                </div>
+                <ul class="data">
+                    <li>
+                        <h2>联盟平均数据</h2>
+                        <h2>球员</h2>
+                    </li>
+                    <li @click="drawerVisible = true">
+                        <h3>55%</h3>
+                        <span>两分</span>
+                        <h3>87%</h3>
+                    </li>
+                    <li @click="drawerVisible = true">
+                        <h3>56%</h3>
+                        <span>三分</span>
+                        <h3>88%</h3>
+                    </li>
+                    <li @click="drawerVisible = true">
+                        <h3>99%</h3>
+                        <span>总计</span>
+                        <h3>100%</h3>
+                    </li>
+                </ul>
             </section>
         </div>
         <Drawer
             :visible.sync='drawerVisible'
             :headerShow="false"
             width="400px"
-            align="right"
-            main-background="rgba(0,0,0,0.7)"
+            align="left"
+            main-background="rgba(0,44,63,0.9)"
         >
             <div class="drawer-container">
                 <p class="title">
@@ -222,7 +249,7 @@
             :headerShow="false"
             height="170px"
             align="bottom"
-            main-background="rgba(0,0,0,0.7)"
+            main-background="rgba(0,44,63,0.7)"
         >
             <div class="drawer-container">
                 <p class="title">
@@ -378,222 +405,218 @@ export default {
         width: 100%;
         height: 10%;
         display: flex;
-        justify-content: flex-start;
-        align-items: flex-start;
-        img{
-            width: 25%;
+        padding-left: 10px;
+        justify-content: space-between;
+        align-items: center;
+        > img{
+            width: 4%;
             cursor: pointer;
+        }
+        > div{
+            display: flex;
+            align-items: center;
+            height: 100%;
+            font-size: 14px;
+            text-shadow: 0px 0px 5px #fff;
+            img{
+                height: 100%;
+                margin: 10px;
+            }
         }
     }
     .main{
+        width: 100%;
         height: 90%;
-        padding-top: 10px;
-        .title{
-            display: flex;
-            h2,h3{
-                color: #fff;
-                font-weight: normal;
-                text-align: center;
-                width: calc(100% / 3);
-            }
+        display: flex;
+        justify-content: space-around;
+        align-items: flex-start;
+        .left{
+            width: 40%;
+            height: 95%;
+            background-image: url("./../assets/imgs/border-2.png");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
             h2{
-                font-size: 16px;
-            }
-            h3{
-                font-size: 14px;
-            }
-        }
-        .top{
-            display: flex;
-            height: calc(50% - 8px);
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 0;
-            ul,li{
-                list-style: none;
-                color: #fff;
-            }
-            
-            .left{
-                width: 38%;
-                height: 100%;
+                background-image: url("./../assets/imgs/title-bg.png");
+                background-position: bottom center;
+                background-repeat: no-repeat;
+                background-size: 50% 50%;
+                text-align: center;
+                height: 10%;
                 display: flex;
-                justify-content: space-between;
-                .title{
+                align-items: center;
+                justify-content: center;
+                font-size: 14px;
+                font-weight: normal;
+                color: #00faff;
+            }
+            .canvas{
+                display: flex;
+                flex-direction: column;
+                justify-content: space-around;
+                width: 80%;
+                height: 80%;
+                padding: 10px 0;
+                margin: 0 auto;
+                .center{
+                    height: 20%;
                     display: flex;
-                    width: 25%;
-                    align-items: flex-start;
-                    padding-left: 5px;
-                    img{
-                        width: 100%;
-                    }
-                    h3{
-                        width: 70%;
+                    justify-content: space-around;
+                    li{
+                        width: 20px;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        justify-items: center;
+                        text-align: center;
+                        height: 100%;
+                        font-size: 10px;
+                        text-shadow: 0px 0px 5px rgba(0, 250, 255, 1)
                     }
                 }
-                ul{
+                .charts{
+                    height: 35%;
                     display: flex;
-                    width: 75%;
-                    justify-content: flex-end;
-                    flex-direction: column;
+                    justify-content: space-around;
+                    background-size: 100% 100%;
+                    li{
+                        display: flex;
+                        flex-direction: column;
+                        height: 100%;
+                        p{
+                            width: 20px;
+                            height: 80%;
+                        }
+                        span{
+                            font-size: 10px;
+                            padding: 5px;
+                        }
+                    }
+                }
+                .top{
+                    background-image: url("./../assets/imgs/img-1-canvas-bg.png");
                     align-items: flex-end;
                     li{
-                        font-size: 12px;
-                        color: #fff;
-                        width: 100%;
-                        display: flex;
                         align-items: center;
                         justify-content: flex-end;
                         p{
-                            width: 30px;
-                            height: 14px;
-                            background: linear-gradient(to right,#ec47da,#3a75f4);
-                            border: 1px solid #ec47da;
-                            box-shadow: 3px 1px 3px rgba(0, 0, 0, 0.75);
-                            margin: 2% 0;
-                            margin-left: 5px;
+                            background-color: #00faff;
                         }
                     }
                 }
-            }
-            .center{
-                width: 24%;
-                height: 100%;
-                .article{
-                    width: 100%;
-                    height: 100%;
-                    background-image: url('./../assets/imgs/vs-bg.png');
-                    background-size: 100% 100%;
-                    background-position: top center;
-                    h2{
-                        color: #fff;
-                        font-size: 14px;
-                        padding: 7px 0 5px;
-                        text-align: center;
-                        text-shadow: 0 0 8px rgba(255, 255, 255, 0.9);
-                    }
-                    .ul{
-                        width: 50%;
-                        height: calc(100% - 26px);
-                        margin: 0 auto;
-                        display: flex;
-                        flex-direction: column;
-                        align-items: flex-start;
-                        justify-content: flex-end;
-                        li{
-                            font-size: 12px;
-                            text-align: left;
-                            margin: 4% 0;
-                            background-image: url('./../assets/imgs/diwen.png');
-                            background-repeat: no-repeat;
-                            background-position-x: 20%;
-                            background-position-y: bottom;
-                            background-size: 70% 50%;
-                            text-shadow: 0 0 5px rgba(255, 255, 255, 0.9);
-                            img{
-                                width: 18%;
-                            }
-                        }
-                    }
-                }
-            }
-            .right{
-                width: 38%;
-                height: 100%;
-                display: flex;
-                align-items: flex-end;
-                justify-content: flex-start;
-                ul{
-                    display: flex;
-                    width: 75%;
-                    justify-content: flex-start;
-                    flex-direction: column;
-                    align-items: flex-end;
+                .bottom{
+                    background-image: url("./../assets/imgs/img-2-canvas-bg.png");
+                    align-items: flex-start;
                     li{
-                        font-size: 12px;
-                        color: #fff;
-                        width: 100%;
-                        display: flex;
                         align-items: center;
                         justify-content: flex-start;
                         p{
-                            width: 30px;
-                            height: 14px;
-                            background: linear-gradient(to right,#4cc6f7,#81e8d3);
-                            border: 1px solid #fff;
-                            box-shadow: 3px 1px 3px rgba(0, 0, 0, 0.75);
-                            margin: 2% 0;
-                            margin-right: 5px;
+                            background-color: #ff3d9e;
                         }
+                        
                     }
+                    
                 }
             }
-        }
-        .bottom{
-            align-items: center;
-            .left{
-                height: 80%;
-                justify-content: center;
-                align-items: flex-end;
-                text-align: right;
+            .legend{
+                height: 10%;
                 ul{
+                    display: flex;
                     justify-content: center;
                     li{
-                        margin: 5% 0;
-                        text-align: center;
-                        justify-content: center;
-                    }
-                }
-                img{
-                    width: 60%;
-                }
-            }
-            .center{
-                height: 80%;
-                overflow: hidden;
-                .article{
-                    width: 100%;
-                    height: 100%;
-                    margin: 0 auto;
-                    display: flex;
-                    flex-direction: column;
-                    background-size: 100% 150%;
-                    justify-content: space-between;
-                    .ol{
-                        width: 50%;
-                        margin: 0 auto;
-                        li{
-                            margin: 12% 0;
-                            text-align: center;
-                            background-position-x: center;
-                            font-size: 12px;
-                            background-image: url('./../assets/imgs/diwen.png');
-                            background-repeat: no-repeat;
-                            background-position-y: bottom;
-                            background-size: 70% 50%;
-                            text-shadow: 0 0 5px rgba(255, 255, 255, 0.9);
-                            img{
-                                width: 20%;
+                        display: flex;
+                        font-size: 12px;
+                        align-items: center;
+                        margin: 0 10px;
+                        span{
+                            width: 20px;
+                            height: 10px;
+                            margin-right: 10px;
+                            background-color: #00faff;
+                        }
+                        &:nth-child(2){
+                            span{
+                                background-color: #ff3d9e;
                             }
                         }
                     }
                 }
+                
             }
-            .right{
-                height: 80%;
+        }
+        .right{
+            width: 50%;
+            height: 95%;
+            h2{
+                text-align: center;
+                font-size: 14px;
+                font-weight: normal;
+                color: #00faff;
+            }
+            .img-box{
+                width: 100%;
+                height: calc(60% - 14px);
+                text-align: center;
+                display: flex;
                 justify-content: center;
-                align-items: flex-end;
-                ul{
-                    justify-content: center;
-                    align-items: center;
-                    li{
-                        margin: 5% 0;
-                        justify-content: center;
-                        text-align: center;
-                    }
-                }
+                margin-top: 10px;
                 img{
-                    width: 60%;
+                    height: 100%;
+                }
+            }
+            .data{
+                width: 60%;
+                height: 40%;
+                margin: 0 auto;
+                padding: 10px 0;
+                li{
+                    margin: 10px 0;
+                    &:nth-child(1){
+                        margin-bottom: 20px;
+                    }
+                    display: flex;
+                    justify-content: space-between;
+                    h2{
+                        width: 45%;
+                        position: relative;
+                        font-size: 12px;
+                        &:after{
+                            content: '';
+                            width: 30px;
+                            height: 2px;
+                            background-color: #ff3d9e;
+                            position: absolute;
+                            left: calc(50% - 15px);
+                            bottom: -10px;
+                        }
+                        &:nth-child(2){
+                            width: 40%;
+                            &:after{
+                                content: '';
+                                width: 30px;
+                                height: 2px;
+                                background-color: #00faff;
+                                position: absolute;
+                                left: calc(50% - 15px);
+                                bottom: -10px;
+                            }
+                        }
+                    }
+                    h3{
+                        width: 40%;
+                        font-size: 14px;
+                        text-align: center;
+                        &:nth-child(1){
+                            width: 45%;
+                        }
+                    }
+                    span{
+                        font-size: 10px;
+                        width: 20%;
+                        text-align: center;
+                        text-shadow: 0px 0px 10px #fff;
+                    }
                 }
             }
         }
@@ -604,12 +627,18 @@ export default {
     height: 100%;
     .table-box{
         h2{
-            font-size: 14px;
+            font-size: 12px;
+            background-image: url("./../assets/imgs/title-bg.png");
+            background-repeat: no-repeat;
+            background-position: bottom center;
+            text-align: center;
+            font-weight: normal;
+            height: 20%;
+            color: #00faff;
         }
         table{
             font-size: 12px;
             width: 100%;
-            margin-top: 10px;
             tr{
                 border-bottom: 1px solid #fff;
                 line-height: 30px;
@@ -638,7 +667,11 @@ export default {
                 padding: 10px 20px;
             }
             .active{
-                border-bottom: 1px solid #20f5c9;
+                background-image: url("./../assets/imgs/title-bg.png");
+                background-repeat: no-repeat;
+                background-size: 100% 50%;
+                background-position: bottom center;
+                color: #00faff;
             }
         }
     }

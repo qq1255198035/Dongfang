@@ -43,8 +43,7 @@ export default {
         padding: 5% 0;
         text-align: center;
         img{
-            width: 50%;
-
+            width: 60%;
         }
     }
 }

@@ -3,35 +3,32 @@
             <div class="swiper-container">
                   <div class="swiper-wrapper">
                         <div class="swiper-slide" v-for="(item,index) in imgUrl" :key="index">
-                              
                               <model-obj 
-                                id="place"
-                                :src="`${publicPath}model/clooth.obj`"
-                                :mtl="`${publicPath}model/clooth.mtl`"
-																backgroundColor="rgb(0,0,0)"
-																:width="320"
-																:height="400"
-																:background-alpha="0"
-                                >
-                              </model-obj>
-															
+                                    id="place"
+                                    :src="`${publicPath}model/clooth.obj`"
+                                    :mtl="`${publicPath}model/clooth.mtl`"
+				            backgroundColor="rgb(0,0,0)"
+						:width="300"
+						:height="800"										
+                                    :background-alpha="0"
+                                    :controlsOptions="{maxPolarAngle: Math.PI/2,minPolarAngle: Math.PI/2,enableKeys: false,enableZoom: false}"
+                              >
+                              </model-obj>									
                         </div>
-
                   </div>
                   <!-- <div class="swiper-pagination"></div> -->
                   <div class="swiper-button-prev"></div>
                   <div class="swiper-button-next"></div>
-            </div>
-						
-						<model-obj 
-							id="place"
-							:src="`${publicPath}model/clooth.obj`"
-							:mtl="`${publicPath}model/clooth.mtl`"
-							backgroundColor="rgb(0,0,0)"
-							@on-click="onMouseMove"
-							:background-alpha="0"
-						>
-						</model-obj>
+            </div>			
+            <!-- <model-obj 
+                  id="place"
+                  :src="`${publicPath}model/clooth.obj`"
+                  :mtl="`${publicPath}model/clooth.mtl`"
+                  backgroundColor="rgb(0,0,0)"
+                  @on-click="onMouseMove"
+                  :background-alpha="0"
+            >
+            </model-obj> -->
 
       </div>
 </template>
@@ -55,48 +52,45 @@ export default {
                         imgurl4,
                         imgurl5
                   },
-									camera: null,
-									scene: null,
-									renderer: null,
-									mesh: null,
-									publicPath: process.env.BASE_URL
+			camera: null,
+                  scene: null,
+                  renderer: null,
+                  mesh: null,
+                  publicPath: process.env.BASE_URL
             }
       },
-			components: {
-
-    ModelObj
-
-},
+	components: {
+            ModelObj
+      },
       methods:{
-						onMouseMove ( event ) {
-
-                    console.log( event );   // event: { distance, face, faceIndex, point, index, uv, object }
-
-                    if ( !event ) {
-
-                        if ( this.intersected ) {
-                            this.intersected.material.color.setStyle( '#fff' );
-                        }
-
+		onMouseMove ( event ) {
+                  console.log( event );   // event: { distance, face, faceIndex, point, index, uv, object }
+                  if ( !event ) {
+                  if ( this.intersected ) {
+                        this.intersected.material.color.setStyle( '#fff' );
+                  }
                         this.intersected = null;
                         return;
-                    }
+                  }
 
-                    this.intersected = event.object;
-                    this.intersected.material.color.setStyle( '#13ce66' );
-                },
+                  //this.intersected = event.object;
+                  //this.intersected.material.color.setStyle( '#13ce66' );
+            },
             initSwiper(){
                   new Swiper ('.swiper-container', {
                         effect : 'coverflow',
-                        
                         slidesPerView: 3,
                         centeredSlides: true,
+                        grabCursor : true,
+                        allowTouchMove: true,
+                        followFinger: false,
                         coverflowEffect: {
-                              rotate: 1000,
+                              rotate: 0,
                               stretch: 10,
-                              depth: 100,
+                              depth: 500,
                               modifier: 1,
-                              
+                              slideShadows : false,
+                              simulateTouch: true
                         },
                         autoplay: {
                               delay: 3000,//自动播放速度
@@ -112,24 +106,22 @@ export default {
                               },
                         },
                   })        
-            },		
+            },
+						
+					
       },
       created(){
             
       },
       mounted(){
             this.initSwiper();
-						//this.init()
-					
       }
 }
 </script>
 
 <style lang="less">
 @import './../../node_modules/swiper/css/swiper.css';
-#container {
-    height: 400px;
-  }
+
 #swiper{
       background: url('./../assets/swiper-bg.png') center;
       padding: 50px;
@@ -159,7 +151,6 @@ export default {
                   width: 100%;
             }
       }
-     
 }
 @media screen and (max-width: 700px){
       .swiper-button-prev,.swiper-button-next{
