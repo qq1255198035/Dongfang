@@ -5,13 +5,13 @@
         </header>
         <section>
             <div class="left">
-                <MySwiper @slideChange="onSlideChange"></MySwiper>
+                <MySwiper @slideChange="onSlideChange" :imgArr="imgArr"></MySwiper>
             </div>
             <div class="center">
                 <div class="btn-box">
-                    <router-link to="/two">
-                        <img src="./../assets/imgs/home-main-btn.png" alt="按钮" />
-                    </router-link>
+                    
+                    <img src="./../assets/imgs/home-main-btn.png" alt="按钮" @click="goTwo(message[imgIndex].id,message[imgIndex].pic)"/>
+                    
                 </div>
                 <div class="img-box">
                     <model-obj 
@@ -34,57 +34,62 @@
                     <canvas id="container" style="width: 100%;height: 100%;"></canvas>
                 </div>
                 <article class="article">
-                    <p>2.11 / 120.2 公斤</p>
-                    <p>生日: 1993-07-20</p>
-                    <p>选秀: 2013</p>
-                    <p>经历: 6 年</p>
-                    <p>加入东方之前: Pittsburgh/New Zealand</p>
+                    <p>{{message[imgIndex].stature}} / {{message[imgIndex].weight}} 公斤</p>
+                    <p>生日: {{message[imgIndex].birth}}</p>
+                    <p>选秀: {{message[imgIndex].draft}}</p>
+                    <p>经历: {{message[imgIndex].experience}}</p>
+                    <p>加入东方之前: {{message[imgIndex].once}}</p>
                 </article>
             </div>
         </section>
     </div>
 </template>
 <script>
+import { queryPageList } from '@/api'
 import animate from 'animate.css';
 import { ModelObj } from 'vue-3d-model'
 import MySwiper from './../components/Swiper'
-import img1 from './../assets/imgs/home-main.png'
-import img2 from './../assets/imgs/home-main-2.png'
-import img3 from './../assets/imgs/home-main-3.png'
-import img4 from './../assets/imgs/leida.png'
-import img5 from './../assets/imgs/leida2.png'
-import img6 from './../assets/imgs/leida3.png'
+
 export default {
     data(){
         return{
             imgIndex: 0,
-            imgUrl:[
-                img1,
-                img2,
-                img3
+            imgArr:[],
+            keysArr: [
+                'attack',
+                'agility',
+                'skill',
+                'power',
+                'bounce'
             ],
-            imgArr:[
-                img4,
-                img5,
-                img6
+            chart: null,
+            message:[
+                {
+                    stature: 0,
+                    weight: 0,
+                    birth: 0,
+                    draft: 0,
+                    experience: 0,
+                    once: 0
+                }
             ],
             publicPath: process.env.BASE_URL,
             data:[
                     {
                     item: '进攻',
-                    score: 70
+                    score: 0
                     }, {
                     item: '敏捷',
-                    score: 30
+                    score: 0
                     }, {
                     item: '技能',
-                    score: 60
+                    score: 0
                     }, {
                     item: '体力',
-                    score: 70
+                    score: 0
                     }, {
                     item: '弹跳',
-                    score: 50
+                    score: 0
                     }
                 ]
         }
@@ -94,29 +99,49 @@ export default {
         ModelObj
     },
     methods:{
+        goTwo(id,url){
+            this.$router.push({path: '/two', query:{id: id,url:url}})
+        },
         onSlideChange(index){
-            console.log(index)
-            this.imgIndex = index
+            this.imgIndex = index;
+            this.keysArr.forEach((item,i) => {
+                this.data[i].score = this.message[index][item]
+            })
+            this.chart.changeData(this.data)
+            console.log(this.data)
+        },
+        getData(){
+            queryPageList().then(res => {
+                console.log(res)
+                this.message = res;
+                res.forEach((item,index) => {
+                    this.imgArr.push(item.pic);  
+                })
+                console.log(this.keysArr)
+                this.keysArr.forEach((aitem,i) => {
+                    console.log(aitem)
+                    this.data[i].score = this.message[this.imgIndex][aitem]
+                })
+            })
         }
+    },
+    created(){
+        
     },
     mounted(){
         this.$nextTick(() => {
-            const chart = new this.F2.Chart({
+            this.getData()
+            this.chart = new this.F2.Chart({
                 id: 'container',
                 pixelRatio: window.devicePixelRatio
             });
-            chart.coord('polar');
+            console.log(this.chart)
+            this.chart.coord('polar');
             //changeData
-            chart.source(this.data, {
-                score: {
-                    min: 0,
-                    max: 120,
-                    nice: false,
-                    tickCount: 4
-                }
-            });
+            console.log(this.data)
+            
             // X轴样式
-            chart.axis('score', {
+            this.chart.axis('score', {
                 // 为null时，雷达图上不显示数值
                 label:null,
                 grid: function label(text, index, total){
@@ -141,7 +166,7 @@ export default {
                 
             });
             //Y轴样式 
-            chart.axis('item', {
+            this.chart.axis('item', {
                 label:{
                         top: true,
                         //字颜色
@@ -152,23 +177,25 @@ export default {
                         stroke: '#2ECCD1'
                     }
             });
-            chart.legend(false);
+            this.chart.legend(false);
             //雷达竖直面积区域样式
             //线颜色
-            chart.line().position('item*score').color('#2ECCD1');
+            this.chart.line().position('item*score').color('#2ECCD1');
             //区域颜色
-            chart.area().position('item*score').style({fillStyle: "l(90) 0:rgba(5,236,254,1) 1:rgba(73,108,236,1)",fillOpacity: 1});
+            this.chart.area().position('item*score').style({fillStyle: "l(90) 0:rgba(5,236,254,1) 1:rgba(73,108,236,1)",fillOpacity: 1});
             //点颜色
-            chart.point().position('item*score').color('red')
+            this.chart.point().position('item*score').color('red')
                 .style({
                     stroke: '#fff',
                     lineWidth: 1,
                     size: 0
                 });
             
-            chart.render();
-        })
             
+            this.chart.source(this.data);
+            this.chart.render();
+        })
+        
         
     }
 }

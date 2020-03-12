@@ -2,7 +2,7 @@
     <div id="Swiper">
         <div class="swiper-container">
             <div class="swiper-wrapper">
-                <div class="swiper-slide" v-for="(item,index) in imgUrl" :key="index" :style="{opacity: active === index ? 1 : 0.5}">
+                <div class="swiper-slide" v-for="(item,index) in imgArr" :key="index" :style="{opacity: active === index ? 1 : 0.5,transform: active === index ? 'scale(1)' : 'scale(0.8)'}">
                     <img :src="item">
                 </div>
             </div>
@@ -11,54 +11,58 @@
 </template>
 <script>
 import Swiper from "swiper"
-import imgurl1 from './../assets/imgs/home-img-4.png'
-import imgurl2 from './../assets/imgs/home-img-4.png'
-import imgurl3 from './../assets/imgs/home-img-4.png'
+
 export default{
+    props:{
+        imgArr:{
+            type: Array,
+            required: true
+        }
+    },
     data(){
         return{
             active: 0,
-            imgUrl: [
-                imgurl1,
-                imgurl2,
-                imgurl3,
-            ],
+            swiper: null
         }
     },
     methods:{
         initSwiper(){
             let that = this;
-            new Swiper ('.swiper-container', {
-                
-                effect : 'coverflow',
+            that.swiper = new Swiper ('.swiper-container', {
+                passiveListeners : false,
+                touchReleaseOnEdges:true,
+                touchAngle : 3600,
+                //touchEventsTarget: 'wrapper',
+                mousewheelControl:true,
+                //effect : 'coverflow',
                 direction : 'vertical',
                 //loop: true,
                 slidesPerView: 'auto',
                 centeredSlides : true,
                 slideToClickedSlide: true,
                 grabCursor : true,
-                followFinger: false,
+                //followFinger: true,
                 simulateTouch: true,
                 allowTouchMove: true,
-                coverflowEffect: {
-                    rotate: 0,
-                    stretch: 10,
-                    depth: 500,
-                    modifier: 1,
-                    slideShadows : false
-                },
-                spaceBetween : 50,
+                // coverflowEffect: {
+                //     rotate: 0,
+                //     stretch: 10,
+                //     depth: 500,
+                //     modifier: 1,
+                //     slideShadows : false
+                // },
+                observer:true,//修改swiper自己或子元素时，自动初始化swiper 
+                observeParents:false,//修改swiper的父元素时，自动初始化swiper 
+                spaceBetween : 10,
                 on: {
                     slideChange: function(){
-                        console.log(this.activeIndex);
                         that.active = this.activeIndex;
                         that.$emit('slideChange',this.activeIndex)
                     },
-                },
-                // autoplay: {
-                //     delay: 1000,//自动播放速度
-                //     disableOnInteraction: true//鼠标移上去时是否还继续播放
-                // },
+                    onSlideChangeEnd: function(){ 
+                        that.swiper.update();  
+                    }
+                }
             })        
         },
     },

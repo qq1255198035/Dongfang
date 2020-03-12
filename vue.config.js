@@ -4,7 +4,7 @@ function resolve(dir) {
       return path.join(__dirname, dir)
 }
 module.exports = {
-      baseUrl: './',
+      publicPath: './',
       productionSourceMap: false,
       chainWebpack: config => {
             config.resolve.alias
@@ -32,16 +32,16 @@ module.exports = {
             }
 
       },
-      // devServer: {
-      //       port: 3000,
-      //       proxy: {
-      //             '/jeecg-boot': {
-      //                   target: process.env.NODE_ENV == 'production' ? '' : 'http://192.168.0.145:8080',
-      //                   //target: 'http://192.168.0.9:8080',
-      //                   ws: false,
-      //                   changeOrigin: true
-      //             },
-      //       }
-      // },
+      devServer: {
+            port: 3000,
+            proxy: {
+                  '/jeecg-boot': {
+                        target: process.env.NODE_ENV == 'production' ? '' : 'http://192.168.0.145:8080',
+                        //target: 'http://192.168.0.9:8080',
+                        ws: false,
+                        changeOrigin: true
+                  },
+            }
+      },
       lintOnSave: undefined
 }

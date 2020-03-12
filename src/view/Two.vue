@@ -4,33 +4,17 @@
             <img src="./../assets/imgs/home-top-btn.png" alt="按钮" @click="$router.go(-1)"/>     
             <div>
                 Fleet Commond
-                <img src="./../assets/imgs/home-img-4.png" alt="">
+                <img :src="url" alt="">
             </div>
         </header>
         <div class="main">
             <section class="left">
                 <h2>赛季数据</h2>
-                <div class="canvas" @click="dialogVisible = true">
-                    <ul class="top charts">
-                        <li>
-                            <span>55</span>
-                            <p></p>
-                        </li>
-                        <li>
-                            <span>55</span>
-                            <p></p>
-                        </li>
-                        <li>
-                            <span>55</span>
-                            <p></p>
-                        </li>
-                        <li>
-                            <span>55</span>
-                            <p></p>
-                        </li>
-                        <li>
-                            <span>55</span>
-                            <p></p>
+                <div class="canvas">
+                    <ul class="top charts" @click="openPersonalDrawer">
+                        <li v-for="(item,index) in points2Arr" :key="index">
+                            <span>{{parseFloat(item)}}</span>
+                            <p :style="{height: item + '%'}"></p>
                         </li>
                     </ul>
                     <ul class="center">
@@ -63,27 +47,12 @@
                             <span>%</span>
                         </li>
                     </ul>
-                    <ul class="bottom charts">
-                        <li>
-                            <p></p>
-                            <span>55</span>
+                    <ul class="bottom charts" @click="openUnionDrawer">
+                        <li v-for="(item,index) in points1Arr" :key="index">
+                            <p :style="{height: item + '%'}"></p>
+                            <span>{{parseFloat(item)}}</span>
                         </li>
-                        <li>
-                            <p></p>
-                            <span>55</span>
-                        </li>
-                        <li>
-                            <p></p>
-                            <span>55</span>
-                        </li>
-                        <li>
-                            <p></p>
-                            <span>55</span>
-                        </li>
-                        <li>
-                            <p></p>
-                            <span>55</span>
-                        </li>
+                        
                     </ul>
                 </div>
                 <div class="legend">
@@ -109,20 +78,20 @@
                         <h2>联盟平均数据</h2>
                         <h2>球员</h2>
                     </li>
-                    <li @click="drawerVisible = true">
-                        <h3>55%</h3>
+                    <li>
+                        <h3 @click="showUnionData">{{this.twoPointerA}}%</h3>
                         <span>两分</span>
-                        <h3>87%</h3>
+                        <h3 @click="showPersinalData">{{this.twoPointerB}}%</h3>
                     </li>
-                    <li @click="drawerVisible = true">
-                        <h3>56%</h3>
+                    <li>
+                        <h3 @click="showUnionData">{{this.threePointerA}}%</h3>
                         <span>三分</span>
-                        <h3>88%</h3>
+                        <h3 @click="showPersinalData">{{this.threePointerB}}%</h3>
                     </li>
-                    <li @click="drawerVisible = true">
-                        <h3>99%</h3>
+                    <li>
+                        <h3 @click="showUnionData">{{this.allPointerA}}%</h3>
                         <span>总计</span>
-                        <h3>100%</h3>
+                        <h3 @click="showPersinalData">{{this.allPointerB}}%</h3>
                     </li>
                 </ul>
             </section>
@@ -153,23 +122,23 @@
                                 <div class="show-time">
                                     <ul>
                                         <li>
-                                            <div v-for="(item,index) in points.slice(0,5)" :key="index" @click="showPoints(item.pointA,item.pointB)">
-                                                <sub>{{item.pointA}}</sub><br />
-                                                <sub>{{item.pointB}}</sub>
+                                            <div v-for="(item,index) in dataShow.slice(0,5)" :key="index" @click="showPoints(item)">
+                                                <sub>{{item.amount}}%</sub><br />
+                                                <sub>{{item.area}} / {{item.avgAmount}}</sub>
                                             </div>
                                             
                                         </li>
                                         <li>
-                                            <div v-for="(item,index) in points.slice(5,9)" :key="index" @click="showPoints(item.pointA,item.pointB)">
-                                                <sub>{{item.pointA}}</sub><br />
-                                                <sub>{{item.pointB}}</sub>
+                                            <div v-for="(item,index) in dataShow.slice(5,9)" :key="index" @click="showPoints(item)">
+                                                <sub>{{item.amount}}%</sub><br />
+                                                <sub>{{item.area}} / {{item.avgAmount}}</sub>
                                             </div>
                                             
                                         </li>
                                         <li>
-                                            <div v-for="(item,index) in points.slice(9)" :key="index" @click="showPoints(item.pointA,item.pointB)">
-                                                <sub>{{item.pointA}}</sub><br />
-                                                <sub>{{item.pointB}}</sub>
+                                            <div v-for="(item,index) in dataShow.slice(9,10)" :key="index" @click="showPoints(item)">
+                                                <sub>{{item.amount}}%</sub><br />
+                                                <sub>{{item.area}} / {{item.avgAmount}}</sub>
                                             </div>
                                             
                                         </li>
@@ -183,13 +152,13 @@
                                     </li>
                                     <li>
                                         <span>赛季表现</span>
-                                        <h2>{{pointA}}</h2>
-                                        <p>{{pointB}}</p>
+                                        <h2>{{pointA ||　0}}%</h2>
+                                        <p>{{pointB || 0}} / {{pointC || 0}}</p>
                                     </li>
                                     <li>
                                         <span>最近五场表现</span>
-                                        <h2>{{pointA}}</h2>
-                                        <p>{{pointB}}</p>
+                                        <h2>{{pointD}}%</h2>
+                                        <p>{{pointE || 0}} / {{pointF || 0}}</p>
                                     </li>
                                 </ul>
                             </div>
@@ -199,23 +168,23 @@
                                 <div class="show-time">
                                     <ul>
                                         <li>
-                                            <div v-for="(item,index) in points.slice(0,5)" :key="index" @click="showPoints(item.pointA,item.pointB)">
-                                                <sub>{{item.pointA}}</sub><br />
-                                                <sub>{{item.pointB}}</sub>
+                                            <div v-for="(item,index) in dataShow.slice(10,15)" :key="index" @click="showPoints(item)">
+                                                <sub>{{item.amount}}%</sub><br />
+                                                <sub>{{item.area}} / {{item.avgAmount}}</sub>
                                             </div>
                                             
                                         </li>
                                         <li>
-                                            <div v-for="(item,index) in points.slice(5,9)" :key="index" @click="showPoints(item.pointA,item.pointB)">
-                                                <sub>{{item.pointA}}</sub><br />
-                                                <sub>{{item.pointB}}</sub>
+                                            <div v-for="(item,index) in dataShow.slice(15,19)" :key="index" @click="showPoints(item)">
+                                                <sub>{{item.amount}}%</sub><br />
+                                                <sub>{{item.area}} / {{item.avgAmount}}</sub>
                                             </div>
                                             
                                         </li>
                                         <li>
-                                            <div v-for="(item,index) in points.slice(9)" :key="index" @click="showPoints(item.pointA,item.pointB)">
-                                                <sub>{{item.pointA}}</sub><br />
-                                                <sub>{{item.pointB}}</sub>
+                                            <div v-for="(item,index) in dataShow.slice(20)" :key="index" @click="showPoints(item)">
+                                                <sub>{{item.amount}}%</sub><br />
+                                                <sub>{{item.area}} / {{item.avgAmount}}</sub>
                                             </div>
                                             
                                         </li>
@@ -229,13 +198,13 @@
                                     </li>
                                     <li>
                                         <span>赛季表现</span>
-                                        <h2>{{pointA}}</h2>
-                                        <p>{{pointB}}</p>
+                                        <h2>{{pointA || 0}}%</h2>
+                                        <p>{{pointB || 0}} / {{pointC || 0}}</p>
                                     </li>
                                     <li>
                                         <span>最近五场表现</span>
-                                        <h2>{{pointA}}</h2>
-                                        <p>{{pointB}}</p>
+                                        <h2>{{pointD}}%</h2>
+                                        <p>{{pointE || 0}} / {{pointF || 0}}</p>
                                     </li>
                                 </ul>
                             </div>
@@ -279,44 +248,25 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>赛季平均</td>
-                                <td>55</td>
-                                <td>55</td>
-                                <td>55</td>
-                                <td>55</td>
-                                <td>55</td>
-                                <td>55</td>
-                                <td>55</td>
-                                <td>55</td>
-                                <td>55</td>
-                                <td>55</td>
-                                <td>55</td>
-                                <td>55</td>
-                                <td>55</td>
-                                <td>55</td>
-                                <td>55</td>
-                            </tr>
-                            <tr>
-                                <td>赛季总计</td>
-                                <td>55</td>
-                                <td>55</td>
-                                <td>55</td>
-                                <td>55</td>
-                                <td>55</td>
-                                <td>55</td>
-                                <td>55</td>
-                                <td>55</td>
-                                <td>55</td>
-                                <td>55</td>
-                                <td>55</td>
-                                <td>55</td>
-                                <td>55</td>
-                                <td>55</td>
-                                <td>55</td>
+                            <tr v-for="(item,index) in showData" :key="index">
+                                <td>{{index === 0 ? '赛季平均' : '赛季总计'}}</td>
+                                <td>{{item.games}}</td>
+                                <td>{{item.start}}</td>
+                                <td>{{item.minute}}</td>
+                                <td>{{item.hitRate}}</td>
+                                <td>{{item.threePointer}}</td>
+                                <td>{{item.freeThrow}}</td>
+                                <td>{{item.attack}}</td>
+                                <td>{{item.guard}}</td>
+                                <td>{{item.avgBackboard}}</td>
+                                <td>{{item.avgSteal}}</td>
+                                <td>{{item.avgBlockShot}}</td>
+                                <td>{{item.fault}}</td>
+                                <td>{{item.foul}}</td>
+                                <td>{{item.avgScore}}</td>
+                                <td>{{item.avgAssist}}</td>
                             </tr>
                         </tbody>
-                        
                     </table>
                 </div>
             </div>
@@ -326,72 +276,327 @@
 <script>
 import Drawer from './../components/Drawer'
 import animate from 'animate.css';
+import {
+    queryMessage,
+    queryUnionMessage,
+    queryUnionsAMessage, 
+    queryUnionsBMessage, 
+    queryPointsAMessage, 
+    queryPointsBMessage,
+    queryTotalMessage,
+    queryUnionTMessage
+} from '@/api'
+const obj = [
+    {
+        key:1,
+        amount: 0,
+        area: 0,
+        avgAmount: 0,
+        avgArea: 0,
+        avgSucceed: 0,
+        succeed: 0
+    },
+    {
+        key:2,
+        amount: 0,
+        area: 0,
+        avgAmount: 0,
+        avgArea: 0,
+        avgSucceed: 0,
+        succeed: 0
+    },
+    {
+        key:3,
+        amount: 0,
+        area: 0,
+        avgAmount: 0,
+        avgArea: 0,
+        avgSucceed: 0,
+        succeed: 0
+    },
+    {
+        key:4,
+        amount: 0,
+        area: 0,
+        avgAmount: 0,
+        avgArea: 0,
+        avgSucceed: 0,
+        succeed: 0
+    },
+    {
+        key:5,
+        amount: 0,
+        area: 0,
+        avgAmount: 0,
+        avgArea: 0,
+        avgSucceed: 0,
+        succeed: 0
+    },
+    {
+        key:6,
+        amount: 0,
+        area: 0,
+        avgAmount: 0,
+        avgArea: 0,
+        avgSucceed: 0,
+        succeed: 0
+    },
+    {
+        key:7,
+        amount: 0,
+        area: 0,
+        avgAmount: 0,
+        avgArea: 0,
+        avgSucceed: 0,
+        succeed: 0
+    },
+    {
+        key:8,
+        amount: 0,
+        area: 0,
+        avgAmount: 0,
+        avgArea: 0,
+        avgSucceed: 0,
+        succeed: 0
+    },
+    {
+        key:9,
+        amount: 0,
+        area: 0,
+        avgAmount: 0,
+        avgArea: 0,
+        avgSucceed: 0,
+        succeed: 0
+    },
+    {
+        key:10,
+        amount: 0,
+        area: 0,
+        avgAmount: 0,
+        avgArea: 0,
+        avgSucceed: 0,
+        succeed: 0
+    },
+]
+let data = {
+        key: 0,
+        id: 1,
+        games: 0,
+        start: 0,
+        minute: 0,
+        hitRate: 0,
+        threePointer: 0,
+        twoPointer:0,
+        freeThrow:0,
+        allPointer:0,
+        attack: 0,
+        guard: 0,
+        avgBackboard: 0,
+        avgSteal: 0,
+        avgBlockShot: 0,
+        fault: 0,
+        foul: 0,
+        avgScore: 0,
+        avgAssist: 0
+    }
 export default {
     data(){
         return{
+            data1: [],
+            data2: [],
+            data3: [],
+            data4: [],
+            data5: [],
+            data6: [],
+            dataShow: [],
             drawerVisible: false,
             dialogVisible: false,
             tabShow: 1,
-            pointA: '56%',
-            pointB: '5/8',
-            points:[
-                {
-                    pointA: '56%',
-                    pointB: '5/8'
-                },
-                {
-                    pointA: '55.6%',
-                    pointB: '5/8'
-                },
-                {
-                    pointA: '52.6%',
-                    pointB: '52/8'
-                },
-                {
-                    pointA: '75.6%',
-                    pointB: '25/8'
-                },
-                {
-                    pointA: '55.6%',
-                    pointB: '52/8'
-                },
-                {
-                    pointA: '55.6%',
-                    pointB: '52/28'
-                },
-                {
-                    pointA: '25.6%',
-                    pointB: '52/87'
-                },
-                {
-                    pointA: '72.6%',
-                    pointB: '24/28'
-                },
-                {
-                    pointA: '28.6%',
-                    pointB: '22/82'
-                },
-                {
-                    pointA: '12.6%',
-                    pointB: '22/8'
-                }
-            ]
+            twoPointerA: '',
+            twoPointerB: '',
+            allPointerA: '',
+            allPointerB: '',
+            threePointerA: '',
+            threePointerB: '',
+            url: '',
+            points1Arr:[],
+            points2Arr:[],
+            pointA: '',
+            pointB: '',
+            pointC: '',
+            pointD: '',
+            pointE: '',
+            pointF: '',
+            unionData:[],
+            personalData:[],
+            showData:[]
         }
     },
     components:{
         Drawer
     },
-    methods:{
-        openDrawer(){
-            this.dialogVisible = true;
-        },
-        showPoints(a,b){
-            this.pointA = a;
-            this.pointB = b;
-        }
-    },
     mounted(){
-    
+        console.log(1)
+        this.url = this.$route.query.url
+        this.getUnionQueryMessage(1);
+        this.getQueryMessage(this.$route.query.id);
+        this.getMessageA(this.$route.query.id);
+        this.getMessageB(this.$route.query.id);
+        this.getUnionMessageA();
+        this.getUnionMessageB();
+        this.getQueryTMessage();
+        this.getQueryTotalMessage(this.$route.query.id)
+    },
+    methods:{
+        showUnionData(){
+            this.drawerVisible = true;
+            this.dataShow = [...this.data3,...this.data4]
+            this.pointA =  this.dataShow[0].amount
+            this.pointB =  this.dataShow[0].area
+            this.pointC =  this.dataShow[0].avgAmount
+            this.pointD =  this.dataShow[0].avgArea
+            this.pointE =  this.dataShow[0].avgSucceed
+            this.pointF =  this.dataShow[0].succeed
+            console.log( this.dataShow)
+        },
+        showPersinalData(){
+            this.drawerVisible = true;
+            this.dataShow = [...this.data1,...this.data2]
+            this.pointA =  this.dataShow[0].amount
+            this.pointB =  this.dataShow[0].area
+            this.pointC =  this.dataShow[0].avgAmount
+            this.pointD =  this.dataShow[0].avgArea
+            this.pointE =  this.dataShow[0].avgSucceed
+            this.pointF =  this.dataShow[0].succeed
+            console.log( this.dataShow)
+        },
+        //球员季前赛
+        getMessageA(id){
+            queryPointsAMessage(id).then(res => {
+                console.log(res)
+                if(res.code === 200){
+                    if(res.result){
+                        this.data1 = res.result.list
+                    }else{
+                        this.data1 = obj
+                    }
+                }
+            })
+        },
+        //球员常规赛
+        getMessageB(id){
+            queryPointsBMessage(id).then(res => {
+                console.log(res)
+                if(res.code === 200){
+                    if(res.result){
+                        this.data2 = res.result.list
+                    }else{
+                        this.data2 = obj
+                    }
+                }
+            })
+        },
+        //联盟季前赛
+        getUnionMessageA(){
+            queryUnionsAMessage().then(res => {
+                console.log(res)
+                if(res.code === 200){
+                    if(res.result){
+                        this.data3 = res.result
+                    }else{
+                        this.data3 = obj
+                    }
+                }
+            })
+        },
+        //联盟常规赛
+        getUnionMessageB(){
+            queryUnionsBMessage().then(res => {
+                console.log(res)
+                if(res.code === 200){
+                    if(res.result){
+                        this.data4 = res.result
+                    }else{
+                        this.data4 = obj
+                    }
+                }
+            })
+        },
+
+        getUnionQueryMessage(id){
+            queryUnionMessage(id).then(res =>　{
+                console.log(res)
+                if(res.code === 200){
+                    let Arr = [res.result.avgScore,res.result.avgAssist,res.result.avgBackboard,res.result.threePointer,res.result.freeThrow]
+                    this.points1Arr = [...Arr];
+                    this.unionData.push(res.result);
+                    this.threePointerA = res.result.threePointer;
+                    this.twoPointerA = res.result.twoPointer;
+                    this.allPointerA = res.result.allPointer
+                }
+            })
+        },
+
+        getQueryMessage(id){
+            queryMessage(id).then(res =>　{
+                console.log(res)
+                if(res.code === 200){
+                    let Arr = [res.result.avgScore,res.result.avgAssist,res.result.avgBackboard,res.result.threePointer,res.result.freeThrow]
+                    this.points2Arr = [...Arr]
+                    this.personalData.push(res.result)
+                    this.threePointerB = res.result.threePointer;
+                    this.twoPointerB = res.result.twoPointer;
+                    this.allPointerB = res.result.allPointer
+                }
+            })
+        },
+
+        openUnionDrawer(){
+            this.dialogVisible = true;
+            this.showData = this.unionData
+        },
+        openPersonalDrawer(){
+            this.dialogVisible = true;
+            this.showData = this.personalData
+        },
+        showPoints(item){
+            this.pointA = item.amount;
+            this.pointB = item.area;
+            this.pointC = item.avgAmount;
+            this.pointD = item.avgArea;
+            this.pointE = item.avgSucceed;
+            this.pointF = item.succeed
+        },
+
+        getQueryTMessage(){
+            queryUnionTMessage().then(res =>　{
+                console.log(res)
+                if(res.code === 200){
+                    if(res.result){
+                        this.data5 = res.result
+                    }else{
+                        this.data5 = data
+                    }
+                    this.unionData.push(this.data5);
+                    console.log(this.unionData)
+                }
+            })
+        },
+
+        getQueryTotalMessage(id){
+            queryTotalMessage(id).then(res =>　{
+                console.log(res)
+                if(res.code === 200){
+                    if(res.result){
+                        this.data6 = res.result
+                    }else{
+                        this.data6 = data
+                    }
+                    this.personalData.push(this.data6);
+                    console.log(this.personalData)
+                }
+            })
+        }
     }
 }
 </script>
