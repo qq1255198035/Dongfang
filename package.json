@@ -16,7 +16,7 @@
     "install": "^0.13.0",
     "less": "^3.10.3",
     "less-loader": "^5.0.0",
-    "swiper": "^5.2.1",
+    "swiper": "^6.5.1",
     "three": "^0.111.0",
     "three-obj-mtl-loader": "^1.0.3",
     "three-orbit-controls": "^82.1.0",
